@@ -1,0 +1,54 @@
+{
+  "name": "ui-test",
+  "version": "0.0.1",
+  "description": "Page UI Test",
+  "main": "src/test.js",
+  "scripts": {
+    "commitmsg": "npm run lint && commitlint -E GIT_PARAMS",
+    "release4": "standard-version --prerelease",
+    "release3": "standard-version --release-as patch",
+    "release2": "standard-version --release-as minor",
+    "release1": "standard-version --release-as major",
+    "release": "standard-version",
+    "dev": "webpack --progress --hide-modules --watch",
+    "build": "webpack -p --progress --hide-modules",
+    "debug": "rimraf test/reports && cross-env DEBUG=* node nightwatch.js",
+    "lint": "fecs check src test",
+    "format": "fecs format src test --replace --output=fixed",
+    "test": "mocha"
+  },
+  "standard-version": {
+    "scripts": {
+      "postchangelog": "replace-in-file /compare/g 'merge' CHANGELOG.md"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laomu1988/puppeteer-extend.git"
+  },
+  "keywords": [
+    "puppeteer",
+    "chain",
+    "extend"
+  ],
+  "author": "muzhilong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laomu1988/puppeteer-extend/issues"
+  },
+  "homepage": "https://github.com/laomu1988/puppeteer-extend#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^7.1.2",
+    "@commitlint/config-conventional": "^7.1.2",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "fecs": "^1.6.2",
+    "husky": "^1.1.2",
+    "mocha": "^5.2.0",
+    "puppeteer": "^1.9.0",
+    "webpack": "^4.20.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}

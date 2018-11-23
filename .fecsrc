@@ -1,0 +1,23 @@
+{
+    "eslint": {
+        "env": {
+            "commonjs": true,
+            "es6": true,
+            "node": true,
+            "browser": true
+        },
+        "rules": {
+            "no-func-assign": 2,
+            "no-console": 0,
+            "camelcase": 0
+        },
+        "globals": {
+            "describe": true,
+            "it": true,
+            "before": true,
+            "after": true,
+            "beforeEach": true,
+            "afterEach": true
+        }
+    }
+}
