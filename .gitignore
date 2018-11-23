@@ -6,3 +6,4 @@ npm-debug.log
 test/screenshots
 .vscode/*
 output
+temp

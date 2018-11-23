@@ -4,11 +4,13 @@
  */
 
 /* eslint-disable fecs-camelcase */
-const path = require('path');
+const fs = require('fs');
+const mkdir = require('mk-dir');
 const _ = require('lodash');
+const config = require('./config');
 const init  = require('./puppeteer_init');
 const parseExpr = require('./utils/parseExpr');
-const tempDir = path.join(__dirname, '../temp');
+const time = require('./utils/time');
 let page = null;
 
 
@@ -68,20 +70,25 @@ async function runCase(one, config, handleLog) {
 async function test(data) {
     const output = [];
     let prev_output = null;
+    let date = new Date();
+    let imageFolder = '/image/' + time.date();
+    let image = imageFolder + '/' + (Date.now() + '' + Math.random()).replace('.', '_') + '.png';
+    if (!fs.existsSync(config.tempDir + imageFolder)) {
+        mkdir(config.tempDir + imageFolder);
+    }
     let pupp = await init({headless: true}, handleLog);
     let result = null;
     let error = null;
-    let image = (Date.now() + '' + Math.random()).replace('.', '_') + '.png';
     data = _.cloneDeep(data);
     data.old = _.cloneDeep(data.config);
     page = pupp.page;
     try {
         result = await runCase(data, null, handleLog);
-        await page.screenshot({path: tempDir + '/' + image});
+        await page.screenshot({path: config.tempDir + '/' + image});
     }
     catch (err) {
         console.log('error', err);
-        await page.screenshot({path: tempDir + '/' + image});
+        await page.screenshot({path: config.tempDir + '/' + image});
         error = err.stack;
     }
     await pupp.browser.close();
