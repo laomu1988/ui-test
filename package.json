@@ -1,6 +1,6 @@
 {
   "name": "@laomu/ui-test",
-  "version": "0.0.1",
+  "version": "0.1.0-0",
   "description": "Page UI Test",
   "main": "src/server.js",
   "scripts": {

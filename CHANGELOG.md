@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0-0"></a>
+# [0.1.0-0](https://github.com/laomu1988/ui-test/compare/v0.0.1...v0.1.0-0) (2018-11-27)
+
+
+### Features
+
+* 命令行启动测试程序 ([85eb6ed](https://github.com/laomu1988/ui-test/commit/85eb6ed))
+
+
+
 <a name="0.0.1"></a>
 ## 0.0.1 (2018-11-27)
 
