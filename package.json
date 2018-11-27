@@ -1,5 +1,5 @@
 {
-  "name": "ui-test",
+  "name": "@laomu/ui-test",
   "version": "0.0.1",
   "description": "Page UI Test",
   "main": "src/server.js",

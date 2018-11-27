@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * @file 命令行工具
  * @author laomu1988
