@@ -3,7 +3,7 @@
  * @author laomu1988
  */
 /* eslint-disable fecs-camelcase */
-const request = require('request');
+const axios = require('axios');
 const config = require('../config');
 const db = require('./db');
 const test = require('./testWithRecord');
@@ -97,28 +97,12 @@ async function testOne(auto) {
 
 // 请求远程服务器，获取最新的测试Case数据详情
 function getAutoCase(auto) {
-    return new Promise((resolve, reject) => {
-        console.log('auto:', auto);
-        request({
-            method: 'post',
-            url: config.caseServer + '/api/case_auto/sync',
-            body: JSON.stringify(auto),
-            headers: {
-                'content-type': 'application/json'
-            }
-        }, (err, res, body) => {
-            if (err) {
-                reject(err);
-            }
-            try {
-                if (typeof body === 'string') {
-                    body = JSON.parse(body);
-                }
-                resolve(body);
-            }
-            catch (err) {
-                reject(err);
-            }
-        });
-    });
+    return axios({
+        method: 'post',
+        url: config.caseServer + '/api/case_auto/sync',
+        data: auto,
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then(res => res.data);
 }
