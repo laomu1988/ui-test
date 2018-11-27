@@ -76,7 +76,11 @@ async function test(data) {
     if (!fs.existsSync(config.tempDir + imageFolder)) {
         mkdir(config.tempDir + imageFolder);
     }
-    let pupp = await init({headless: true}, handleLog);
+    let pupp_config = {headless: true};
+    if (config.chromium) {
+        pupp_config.executablePath = config.chromium;
+    }
+    let pupp = await init(pupp_config, handleLog);
     let result = null;
     let error = null;
     data = _.cloneDeep(data);

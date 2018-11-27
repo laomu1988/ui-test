@@ -1,6 +1,6 @@
 {
-  "name": "@laomu/ui-test",
-  "version": "0.1.0-0",
+  "name": "e2etest",
+  "version": "0.1.0-3",
   "description": "Page UI Test",
   "main": "src/server.js",
   "scripts": {
@@ -14,6 +14,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/laomu1988/ui-test.git"
+  },
+  "bin": {
+    "e2etest": "./bin/e2etest"
   },
   "keywords": [
     "puppeteer",

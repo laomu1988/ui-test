@@ -3,8 +3,8 @@
 
 ## 安装
 ```sh
-npm install @laomu/ui-test  # 正常安装
-npm install @laomu/ui-test --ignore-scripts # 避免chromium下载失败问题
+npm install -g e2etest  # 正常安装
+npm install -g e2etest --ignore-scripts # 避免chromium下载失败问题
 ```
 
 ## 主要功能
@@ -13,6 +13,9 @@ npm install @laomu/ui-test --ignore-scripts # 避免chromium下载失败问题
 * [x] 定时执行测试Case
 * [x] 执行结果查看
 * [x] 命令行启动
+* [ ] chromium配置
+* [ ] 测试文件存放地址默认改为用户路径地址+/.e2etest
+* [ ] 删除过期测试文件
 
 ## 测试Case示例
 

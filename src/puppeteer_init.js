@@ -7,14 +7,15 @@ const extend = require('./puppeteer_extend');
 
 
 module.exports = async function (params = {headless: true}, logHandle) {
-    let browser = await puppeteer.launch({
-        headless: params.headless,
+    params = Object.assign({
+        headless: true,
         ignoreHTTPSErrors: true,
         defaultViewport: {
             width: 1280,
             height: 800
         }
     });
+    let browser = await puppeteer.launch(params);
     let page = extend(await browser.newPage(), logHandle);
     return {
         browser,

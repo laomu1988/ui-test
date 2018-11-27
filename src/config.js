@@ -10,6 +10,7 @@ const config = {
     interval: 30, // 30秒
     tempDir: path.join(__dirname, '../temp'),
     maxInstance: 3, // 最多同时启用的进程数目
+    chromium: '', // 指定chromium路径地址
     bodyOptions: {
         json: true
     }
