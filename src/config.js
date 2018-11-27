@@ -15,4 +15,6 @@ const config = {
     }
 };
 
-module.exports = config;
+const globalConfig = global.config;
+
+module.exports = Object.assign(config, globalConfig);
