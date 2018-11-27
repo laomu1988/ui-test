@@ -5,8 +5,11 @@
 const path = require('path');
 
 const config = {
-    port: 8001,
+    port: 8001, // 本地测试服务端口
+    caseServer: 'http://localhost:8201', // case管理服务地址
+    interval: 30, // 30秒
     tempDir: path.join(__dirname, '../temp'),
+    maxInstance: 3, // 最多同时启用的进程数目
     bodyOptions: {
         json: true
     }

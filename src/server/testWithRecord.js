@@ -13,13 +13,14 @@ const config = require('../config');
 module.exports = function (cases) {
     let one = {
         time: Date.now(),
-        date_id: cases.id,
+        data_id: cases.id,
         name: cases.name,
         username: cases.username,
+        project_id: cases.project_id,
         status: 0 // 未执行， 1执行成功，-1执行失败
     };
     db.pushRecord(one);
-    run(cases)
+    return run(cases)
         .then(result => writeResult(one, result))
         .catch(error => writeResult(one, {error, stack: error.stack}));
 };
@@ -32,6 +33,8 @@ function writeResult(data, result) {
         mkdir(config.tempDir + folder);
     }
     fs.writeFileSync(config.tempDir + path, JSON.stringify(result), 'utf8');
-    data.status = result.error ? 1 : -1;
+    data.end = Date.now();
+    data.status = result.error ? -1 : 1;
     db.update();
+    return result;
 }

@@ -9,15 +9,22 @@ const serve = require('koa-static');
 const cros = require('./server/cors');
 const config = require('./config');
 const apis = require('./server/router');
+const timer = require('./server/timer');
 
 const app = new Koa();
 const router = new Router();
-app.use((ctx, next) => {
+app.use(async (ctx, next) => {
     console.log(ctx.method, ctx.href);
-    return next();
+    try {
+        await next();
+    }
+    catch (err) {
+        console.log('ServerError:', err);
+        ctx.body = {errno: 400, errmsg: err.message, stack: err.stack};
+    }
 });
-app.use(serve(config.tempDir));
 app.use(cros);
+app.use(serve(config.tempDir));
 app.use(koaBody(config.bodyOptions));
 apis(router);
 app.use(router.routes());
@@ -36,5 +43,8 @@ app.listen(config.port, function (err) {
     }
     else {
         console.log('start app at: http://localhost:' + config.port);
+        let interval = setInterval(timer, 20 * 1000);
+        console.log('start check timer');
+        timer();
     }
 });

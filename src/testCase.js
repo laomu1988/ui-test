@@ -97,6 +97,7 @@ async function test(data) {
         result,
         output,
         image,
+        errno: error ? 400 : 0,
         error
     };
 
