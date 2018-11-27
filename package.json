@@ -11,11 +11,6 @@
     "release1": "standard-version --release-as major",
     "release": "standard-version"
   },
-  "standard-version": {
-    "scripts": {
-      "postchangelog": "replace-in-file /compare/g 'merge' CHANGELOG.md"
-    }
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/laomu1988/ui-test.git"
