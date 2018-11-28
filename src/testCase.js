@@ -70,7 +70,6 @@ async function runCase(one, config, handleLog) {
 async function test(data) {
     const output = [];
     let prev_output = null;
-    let date = new Date();
     let imageFolder = '/image/' + time.date();
     let image = imageFolder + '/' + (Date.now() + '' + Math.random()).replace('.', '_') + '.png';
     if (!fs.existsSync(config.tempDir + imageFolder)) {
@@ -78,7 +77,11 @@ async function test(data) {
     }
     let pupp_config = {headless: true};
     if (config.chromium) {
-        pupp_config.executablePath = config.chromium;
+        let path = config.chromium;
+        if (path.endsWith('.app')) {
+            path = path + '/Contents/MacOS/Chromium';
+        }
+        pupp_config.executablePath = path;
     }
     let pupp = await init(pupp_config, handleLog);
     let result = null;
@@ -123,7 +126,6 @@ module.exports = test;
 function evalExpr(str, data) {
     let func = parseExpr(str);
     if (typeof func === 'function') {
-        console.log('evalExpr:', str, func);
         return func(data);
     }
     return func;

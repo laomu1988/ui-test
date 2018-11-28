@@ -14,7 +14,8 @@ module.exports = async function (params = {headless: true}, logHandle) {
             width: 1280,
             height: 800
         }
-    });
+    }, params);
+    console.log('params:', params);
     let browser = await puppeteer.launch(params);
     let page = extend(await browser.newPage(), logHandle);
     return {

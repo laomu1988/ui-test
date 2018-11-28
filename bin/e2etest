@@ -10,7 +10,6 @@ const config = {};
 
 program
     .version(pkg.version, '-v, --version')
-    .command('ui-test -h server-host -p 8001', '启动本地服务并指定端口和远程服务地址')
     .option('-h, --host <host>', 'ui-test远程测试Case管理服务地址')
     .option('-p, --port <n>', 'ui-test本地服务端口，默认为8001', parseInt)
     .option('-c, --chromium <path>', '应用chromium的本地路径地址')
@@ -23,6 +22,10 @@ if (program.host) {
 
 if (program.port) {
     config.port = program.port;
+}
+
+if (program.chromium) {
+    config.chromium = program.chromium;
 }
 
 if (program.dir) {
