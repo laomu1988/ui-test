@@ -6,13 +6,13 @@
 const fs = require('fs');
 const mkdir = require('mk-dir');
 const config = require('../config');
-const recordPath = config.tempDir + '/records.json';
-const projectPath = config.tempDir + '/project.json';
-const casesPath = config.tempDir + '/cases.json';
+const recordPath = config.dir + '/records.json';
+const projectPath = config.dir + '/project.json';
+const casesPath = config.dir + '/cases.json';
 class Db {
     constructor() {
-        if (!fs.existsSync(config.tempDir)) {
-            mkdir(config.tempDir);
+        if (!fs.existsSync(config.dir)) {
+            mkdir(config.dir);
         }
         if (fs.existsSync(recordPath)) {
             this.records = require(recordPath);
@@ -22,6 +22,10 @@ class Db {
         }
         if (fs.existsSync(casesPath)) {
             this.cases = require(casesPath);
+            console.log('HasAuthCases:', JSON.stringify(this.cases));
+            this.cases.forEach(v => {
+                v.is_running = false;
+            });
         }
         this.records = this.records || [];
         this.projects = this.projects || [];
@@ -44,6 +48,9 @@ class Db {
             this.cases.splice(index, 1);
             fs.writeFileSync(casesPath, JSON.stringify(this.cases), 'utf8');
         }
+    }
+    updateCase() {
+        fs.writeFileSync(casesPath, JSON.stringify(this.cases), 'utf8');
     }
     // 增加测试记录
     pushRecord(record) {
@@ -71,6 +78,16 @@ class Db {
         all = all.filter(v => v.project_id === project_id);
         if (data_id) {
             all = all.filter(v => v.data_id === data_id);
+        }
+        if (typeof query.status !== 'undefined') {
+            let status = parseInt(query.status, 10);
+            all = all.filter(v => v.status === status);
+        }
+        if (query.start) {
+            all = all.filter(v => v.time >= query.start);
+        }
+        if (query.end) {
+            all = all.filter(v => v.time <= query.end);
         }
         let list = all.slice(start, start + pageSize);
         return {

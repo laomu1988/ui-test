@@ -11,18 +11,35 @@ const test = require('./testWithRecord');
 const tasks = [];
 const runningTasks = [];
 
+(async function () {
+    try {
+        let result = await test({id: 1, name: '测试是否可以执行任务'});
+        if (result.error) {
+            process.exit();
+        }
+    }
+    catch (err) {
+        process.exit();
+    }
+})();
+
+
 // 检查定时case，并将需要执行的定时case放入tasks列表中
 module.exports = function check() {
     if (tasks.length === 0) {
         let now = Date.now();
+        // console.log('Tasks:', JSON.stringify(db.cases));
         db.cases
             .filter(v => !v.is_running)
-            .filter(v => !v.test_time || (v.test_time - now >= v.interval * 1000))
+            .filter(v => !v.test_time || (now - v.test_time >= v.interval * 60 * 1000))
             .forEach(v => tasks.push(v));
-        console.log('New Tasks:', tasks.length);
+        console.log('HasNewTasks:', tasks.length);
+        if (tasks.length > 0) {
+            console.log('Tasks:', JSON.stringify(tasks));
+        }
     }
     else {
-        console.log('Has Tasks:', tasks.length);
+        console.log('HasTasks:', tasks.length);
     }
     testCases();
 };
@@ -63,7 +80,7 @@ async function testOne(auto) {
         auto.test_time = Date.now();
         let res = await getAutoCase(auto);
         let data = res.data;
-        console.log('caseData:', data);
+        console.log('GetCaseData:', data.id, data.name, JSON.stringify(data));
         if (!data.id) {
             db.pushRecord(Object.assign({}, auto, {status: -1, errmsg: '加载远程服务数据失败'}));
             throw new Error('加载远程服务数据失败');
@@ -78,7 +95,7 @@ async function testOne(auto) {
         error = result.error;
     }
     catch (err) {
-        console.log('testCaseError:', err);
+        console.log('TestCaseError:', err.message, err.stack);
         error = err;
     }
     if (!error) {
@@ -92,14 +109,15 @@ async function testOne(auto) {
         auto.failure_times += 1;
     }
     auto.is_running = false;
-    console.log('run task end:', auto.id);
+    db.updateCase();
+    console.log('RunTaskEnd:', auto.id, auto.name);
 }
 
 // 请求远程服务器，获取最新的测试Case数据详情
 function getAutoCase(auto) {
     return axios({
         method: 'post',
-        url: config.caseServer + '/api/case_auto/sync',
+        url: config.host + '/api/case_auto/sync',
         data: auto,
         headers: {
             'content-type': 'application/json'

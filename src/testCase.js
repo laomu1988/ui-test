@@ -72,8 +72,8 @@ async function test(data) {
     let prev_output = null;
     let imageFolder = '/image/' + time.date();
     let image = imageFolder + '/' + (Date.now() + '' + Math.random()).replace('.', '_') + '.png';
-    if (!fs.existsSync(config.tempDir + imageFolder)) {
-        mkdir(config.tempDir + imageFolder);
+    if (!fs.existsSync(config.dir + imageFolder)) {
+        mkdir(config.dir + imageFolder);
     }
     let pupp_config = {headless: true};
     if (config.chromium) {
@@ -91,11 +91,11 @@ async function test(data) {
     page = pupp.page;
     try {
         result = await runCase(data, null, handleLog);
-        await page.screenshot({path: config.tempDir + '/' + image});
+        await page.screenshot({path: config.dir + '/' + image});
     }
     catch (err) {
         console.log('error', err);
-        await page.screenshot({path: config.tempDir + '/' + image});
+        await page.screenshot({path: config.dir + '/' + image});
         error = err.stack;
     }
     await pupp.browser.close();

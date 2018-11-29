@@ -2,21 +2,20 @@
  * @file 服务配置
  * @author laomu1988
  */
-const path = require('path');
 const os = require('os');
 
-const config = {
+const config = Object.assign({
     port: 8001, // 本地测试服务端口
-    caseServer: 'http://localhost:8201', // case管理服务地址
-    interval: 30, // 30秒
-    tempDir: os.homedir() + '/.e2etest',
-    maxInstance: 3, // 最多同时启用的进程数目
+    host: 'http://localhost:8201', // case管理服务地址
     chromium: '', // 指定chromium路径地址
+    dir: os.homedir() + '/.e2etest',
+    interval: 30, // 30秒
+    maxInstance: 3, // 最多同时启用的进程数目
     bodyOptions: {
         json: true
     }
-};
+}, global.config);
 
-const globalConfig = global.config;
+console.log('UseConfig', JSON.stringify(config, null, 4));
 
-module.exports = Object.assign(config, globalConfig);
+module.exports = config;

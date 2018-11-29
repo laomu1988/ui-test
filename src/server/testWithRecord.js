@@ -22,17 +22,20 @@ module.exports = function (cases) {
     db.pushRecord(one);
     return run(cases)
         .then(result => writeResult(one, result))
-        .catch(error => writeResult(one, {error, stack: error.stack}));
+        .catch(error => writeResult(one, {error: error.message || error, stack: error.stack}));
 };
 
 function writeResult(data, result) {
+    if (result.error) {
+        console.log('Error:', result.error, result.stack);
+    }
     let folder = '/record/' + time.date() + '/';
     let path = folder + Date.now() + '_' + Math.random() + '.json';
     data.path = path;
-    if (!fs.existsSync(config.tempDir + folder)) {
-        mkdir(config.tempDir + folder);
+    if (!fs.existsSync(config.dir + folder)) {
+        mkdir(config.dir + folder);
     }
-    fs.writeFileSync(config.tempDir + path, JSON.stringify(result), 'utf8');
+    fs.writeFileSync(config.dir + path, JSON.stringify(result), 'utf8');
     data.end = Date.now();
     data.status = result.error ? -1 : 1;
     db.update();

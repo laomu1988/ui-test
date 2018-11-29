@@ -10,6 +10,11 @@ const cros = require('./server/cors');
 const config = require('./config');
 const apis = require('./server/router');
 const timer = require('./server/timer');
+const time = require('./utils/time');
+
+require('log-timestamp')(function () {
+    return '[' + time.datetime(new Date()) + '] %s';
+});
 
 const app = new Koa();
 const router = new Router();
@@ -24,7 +29,7 @@ app.use(async (ctx, next) => {
     }
 });
 app.use(cros);
-app.use(serve(config.tempDir));
+app.use(serve(config.dir));
 app.use(koaBody(config.bodyOptions));
 apis(router);
 app.use(router.routes());

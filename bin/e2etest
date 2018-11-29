@@ -17,7 +17,7 @@ program
     .parse(process.argv);
 
 if (program.host) {
-    config.caseServer = program.host;
+    config.host = program.host;
 }
 
 if (program.port) {
@@ -29,7 +29,7 @@ if (program.chromium) {
 }
 
 if (program.dir) {
-    config.tempDir = program.dir;
+    config.dir = program.dir;
 }
 console.log('config:', config);
 
