@@ -74,6 +74,7 @@ async function testCases() {
 
 async function testOne(auto) {
     let error = null;
+    let result = null;
     console.log('run task:', auto.id);
     auto.is_running = true;
     try {
@@ -91,7 +92,7 @@ async function testOne(auto) {
                 auto[attr] = data[attr];
             }
         });
-        let result = test(data);
+        result = await test(data);
         error = result.error;
     }
     catch (err) {
@@ -110,7 +111,7 @@ async function testOne(auto) {
     }
     auto.is_running = false;
     db.updateCase();
-    console.log('RunTaskEnd:', auto.id, auto.name);
+    console.log('RunTaskEnd:', auto.id, auto.name, error ? 'Failure' : 'Success');
 }
 
 // 请求远程服务器，获取最新的测试Case数据详情
