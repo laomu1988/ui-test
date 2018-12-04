@@ -8,6 +8,7 @@ const extend = require('./puppeteer_extend');
 
 module.exports = async function (params = {headless: true}, logHandle) {
     params = Object.assign({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
         headless: true,
         ignoreHTTPSErrors: true,
         defaultViewport: {

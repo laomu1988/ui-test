@@ -93,6 +93,9 @@ async function test(data) {
         }
         pupp_config.executablePath = path;
     }
+    if (config.chromiumLanch) {
+        pupp_config = Object.assign(pupp_config, config.chromiumLanch);
+    }
     let pupp = await init(pupp_config, handleLog);
     let result = null;
     let error = null;
