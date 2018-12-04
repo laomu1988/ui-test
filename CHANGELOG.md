@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.2"></a>
+## [0.1.2](https://github.com/laomu1988/ui-test/compare/v0.1.1...v0.1.2) (2018-12-04)
+
+
+### Features
+
+* 增加执行表达式和循环执行函数 ([c7a76e0](https://github.com/laomu1988/ui-test/commit/c7a76e0))
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/laomu1988/ui-test/compare/v0.1.0...v0.1.1) (2018-11-29)
 
