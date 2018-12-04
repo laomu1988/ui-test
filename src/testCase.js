@@ -24,7 +24,7 @@ async function runCase(one, config, handleLog) {
     one.run_status = 1;
     one.run_start = Date.now();
     if (one.id) {
-        handleLog('RunCase:', one.id, one.name || '');
+        handleLog('RunCase:', one.id, one.name || '', one.type, one.method, one.args);
     }
     if (one.config) {
         config = Object.assign(config || {}, one.config);
@@ -38,28 +38,38 @@ async function runCase(one, config, handleLog) {
         }
     }
     let result;
+    let hasRunChildren = false;
     if (one.method) {
-        if (one.args) {
-            let args = one.args.map(v => evalExpr(v, config));
-            one.log = one.method + '(' + args.map(stringify).join(',') + ')';
-            handleLog(' method', one.log);
+        let args = (one.args || []).map(v => evalExpr(v, config));
+        one.log = one.method + '(' + args.map(stringify).join(',') + ')';
+        handleLog(' method', one.log);
+        if (one.method === 'exec') {
+            result = args[0];
+        }
+        else if (one.method === 'repeat') {
+            let len = args[0];
+            let repeatIndex = args[1] || '$index_' + one.id;
+            config[repeatIndex] = 0;
+            for (;config[repeatIndex] < len; config[repeatIndex]++) {
+                await runCase(one.children || [], config, handleLog);
+            }
+            hasRunChildren = true;
+        }
+        else if (page[one.method]) {
             result = await page[one.method](...args);
         }
         else {
-            one.log = one.method + '()';
-            handleLog(' method', one.log);
-            result = await page[one.method]();
+            handleLog(' 未知方法', one.method);
+            console.error('未知方法', one.method);
+            throw new Error('Unknow Function:' + one.method);
         }
         if (one.variable) {
             config[one.variable] = result;
             handleLog('variable:', one.variable, result);
         }
     }
-    if (one.cases) {
-        await runCase(one.cases, config, handleLog);
-    }
-    if (one.children) {
-        await runCase(one.children, config, handleLog);
+    if (!hasRunChildren) {
+        await runCase(one.children || [], config, handleLog);
     }
     one.run_time = Date.now() - one.run_start;
     one.run_status = 2;
