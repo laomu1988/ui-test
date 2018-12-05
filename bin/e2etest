@@ -14,6 +14,7 @@ program
     .option('-p, --port <n>', 'ui-test本地服务端口，默认为8001', parseInt)
     .option('-c, --chromium <path>', '应用chromium的本地路径地址')
     .option('-d, --dir <host>', 'ui-test本地数据保存目录')
+    .option('-r, --retain <n>', '日志保留天数')
     .parse(process.argv);
 
 if (program.host) {

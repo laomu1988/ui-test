@@ -18,7 +18,7 @@ class Db {
             this.records = require(recordPath);
         }
         if (fs.existsSync(projectPath)) {
-            this.records = require(projectPath);
+            this.projects = require(projectPath);
         }
         if (fs.existsSync(casesPath)) {
             this.cases = require(casesPath);
@@ -55,6 +55,7 @@ class Db {
     // 增加测试记录
     pushRecord(record) {
         this.records.unshift(record);
+        this.update();
     }
     filterCase(query) {
         return this.filterData(query, this.cases);
@@ -99,10 +100,16 @@ class Db {
     }
     // 更新json数据
     update() {
-        this.needUpdate + 1;
-        this.forceUpdate();
+        if (this.needUpdate) {
+            return;
+        }
+        // 避免频繁写入文件
+        this.needUpdate = setTimeout(() => {
+            this.forceUpdate();
+        }, 10000);
     }
     forceUpdate() {
+        console.log('update:', recordPath);
         fs.writeFileSync(recordPath, JSON.stringify(this.records), 'utf8');
         this.needUpdate = 0;
     }

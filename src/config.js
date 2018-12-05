@@ -12,6 +12,7 @@ const config = Object.assign({
     dir: os.homedir() + '/.e2etest',
     interval: 30, // 30秒
     maxInstance: 3, // 最多同时启用的进程数目
+    retain: 30, // 日志最多保存多少天,默认30天
     bodyOptions: {
         json: true
     }

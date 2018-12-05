@@ -10,6 +10,7 @@ const cros = require('./server/cors');
 const config = require('./config');
 const apis = require('./server/router');
 const timer = require('./server/timer');
+const clear = require('./server/clearLog');
 const time = require('./utils/time');
 
 require('log-timestamp')(function () {
@@ -49,7 +50,9 @@ app.listen(config.port, function (err) {
     else {
         console.log('start app at: http://localhost:' + config.port);
         let interval = setInterval(timer, 20 * 1000);
+        setInterval(clear, 10 * 60 * 1000); // 每10分钟检查一次文件夹
         console.log('start check timer');
         timer();
+        clear();
     }
 });
