@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/laomu1988/ui-test/compare/v0.1.2...v0.1.3) (2018-12-05)
+
+
+### Features
+
+* 自动清理过期日志 ([93f19a7](https://github.com/laomu1988/ui-test/commit/93f19a7))
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/laomu1988/ui-test/compare/v0.1.1...v0.1.2) (2018-12-04)
 
