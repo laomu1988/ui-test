@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/laomu1988/ui-test/compare/v0.1.3...v0.2.0) (2018-12-25)
+
+
+### Features
+
+* 使用puppeteer-extend替代内部函数；$getSelector改为$css;$waitForText改为$waitFor;$waitForNotText改为$waitForNot; ([fb10b71](https://github.com/laomu1988/ui-test/commit/fb10b71))
+
+
+
 <a name="0.1.4"></a>
 ## [0.1.4](https://github.com/laomu1988/ui-test/compare/v0.1.3...v0.1.4) (2018-12-25)
 
