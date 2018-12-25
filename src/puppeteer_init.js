@@ -3,7 +3,7 @@
  * @author muzhilong<muzhilong@baidu.com>
  */
 const puppeteer = require('puppeteer');
-const extend = require('puppeteer_extend');
+const extend = require('puppeteer-extend');
 
 
 module.exports = async function (params = {headless: true}, logHandle) {

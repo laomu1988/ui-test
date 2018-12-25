@@ -4,6 +4,7 @@
   "description": "Page UI Test",
   "main": "src/server.js",
   "scripts": {
+    "test": "cross-env DEBUG=puppeteer-extend node test/test.js",
     "commitmsg": "npm run lint && commitlint -E GIT_PARAMS",
     "release4": "standard-version --prerelease",
     "release3": "standard-version --release-as patch",
@@ -32,8 +33,8 @@
   "devDependencies": {
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
+    "cross-env": "^5.2.0",
     "husky": "^1.1.2",
-    "puppeteer-extend": "0.0.1",
     "standard-version": "^4.4.0"
   },
   "dependencies": {
@@ -48,6 +49,7 @@
     "log-timestamp": "^0.2.1",
     "mk-dir": "^1.0.1",
     "puppeteer": "^1.9.0",
+    "puppeteer-extend": "0.0.2",
     "require-dir": "^1.1.0"
   }
 }
