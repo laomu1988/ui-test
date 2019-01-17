@@ -55,11 +55,11 @@ async function runCase(one, config, handleLog) {
             }
             hasRunChildren = true;
         }
-        else if (page[one.method]) {
+        else if (typeof page[one.method] === 'function') {
             result = await page[one.method](...args);
         }
         else {
-            handleLog(' 未知方法', one.method);
+            handleLog(' 未知方法', one.method, page[one.method]);
             console.error('未知方法', one.method);
             throw new Error('Unknow Function:' + one.method);
         }
